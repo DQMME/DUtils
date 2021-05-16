@@ -1,0 +1,11 @@
+name: DUtils
+version: ${project.version}
+main: de.dqmme.dutils.DUtils
+api-version: 1.16
+authors: [ DQMME ]
+description: Challenge Plugin von Domme
+website: dqmme.de
+commands:
+  settings:
+    permission: dutils.settings
+  dutils:
