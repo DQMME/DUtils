@@ -71,4 +71,8 @@ public final class DUtils extends JavaPlugin {
             e.printStackTrace();
         }
     }
+
+    public void initGameRule() {
+        saveFile(gamerulesConf, gamerules);
+    }
 }
