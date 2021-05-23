@@ -7,16 +7,26 @@ import java.io.IOException;
 
 public class GameruleUtils {
     //<>
-    public void setDifficulty(Difficulty difficulty) {
+    public void setDifficulty(String difficulty) {
         DUtils.getPlugin(DUtils.class).gamerulesConf.set("Difficulty", difficulty);
         DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).gamerulesConf, DUtils.getPlugin(DUtils.class).gamerules);
     }
 
     public Difficulty getDifficulty() {
+        Difficulty difficulty = null;
         if(DUtils.getPlugin(DUtils.class).gamerulesConf.get("Difficulty") == null) {
-            setDifficulty(Difficulty.NORMAL);
+            setDifficulty("NORMAL");
+            difficulty = Difficulty.NORMAL;
+        } else if(DUtils.getPlugin(DUtils.class).gamerulesConf.get("Difficulty").equals("PEACEFUL")) {
+            difficulty = Difficulty.PEACEFUL;
+        } else if(DUtils.getPlugin(DUtils.class).gamerulesConf.get("Difficulty").equals("EASY")) {
+            difficulty = Difficulty.EASY;
+        } else if(DUtils.getPlugin(DUtils.class).gamerulesConf.get("Difficulty").equals("NORMAL")) {
+            difficulty = Difficulty.NORMAL;
+        } else if(DUtils.getPlugin(DUtils.class).gamerulesConf.get("Difficulty").equals("HARD")) {
+            difficulty = Difficulty.HARD;
         }
-        return (Difficulty) DUtils.getPlugin(DUtils.class).gamerulesConf.get("Difficulty");
+        return difficulty;
     }
 
     public void setPvP(boolean pvp) {
@@ -68,15 +78,15 @@ public class GameruleUtils {
     }
 
     public void setUHC(boolean uhc) {
-        DUtils.getPlugin(DUtils.class).gamerulesConf.set("UHC", uhc);
+        DUtils.getPlugin(DUtils.class).gamerulesConf.set("NaturalRegeneration", uhc);
         DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).gamerulesConf, DUtils.getPlugin(DUtils.class).gamerules);
     }
 
     public boolean getUHC() {
-        if(DUtils.getPlugin(DUtils.class).gamerulesConf.get("UHC") == null) {
-            setUHC(false);
+        if(DUtils.getPlugin(DUtils.class).gamerulesConf.get("NaturalRegeneration") == null) {
+            setUHC(true);
         }
-        return DUtils.getPlugin(DUtils.class).gamerulesConf.getBoolean("UHC");
+        return DUtils.getPlugin(DUtils.class).gamerulesConf.getBoolean("NaturalRegeneration");
     }
 
     public void setUUHC(boolean uuhc) {

@@ -16,13 +16,15 @@ public class InteractListener implements Listener {
         Player player = e.getPlayer();
 
         if(gameruleUtils.getSoup()) {
-            if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-                if(e.getItem().getType().equals(Material.MUSHROOM_STEW)) {
-                    if(player.getHealth() != player.getMaxHealth()) {
-                        if(player.getHealth()+4 > player.getMaxHealth()) {
-                            player.setHealth(player.getMaxHealth());
-                        } else {
-                            player.setHealth(player.getHealth() + 4);
+            if(!gameruleUtils.getUUHC()) {
+                if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+                    if(e.getItem().getType().equals(Material.MUSHROOM_STEW)) {
+                        if(player.getHealth() != player.getMaxHealth()) {
+                            if(player.getHealth()+4 > player.getMaxHealth()) {
+                                player.setHealth(player.getMaxHealth());
+                            } else {
+                                player.setHealth(player.getHealth() + 4);
+                            }
                         }
                     }
                 }

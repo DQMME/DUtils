@@ -16,9 +16,12 @@ public class DamageListener implements Listener {
             Player player = (Player) e.getEntity();
 
             if(gameruleUtils.getSplitHealth()) {
-                for(Player all : Bukkit.getOnlinePlayers()) {
-                    all.setHealth(all.getHealth()-e.getDamage());
-                    e.setCancelled(true);
+                if(e.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
+                    for(Player all : Bukkit.getOnlinePlayers()) {
+                        //all.setHealth(all.getHealth()-e.getDamage());
+                        all.damage(e.getDamage());
+                        e.setCancelled(true);
+                    }
                 }
             }
 
