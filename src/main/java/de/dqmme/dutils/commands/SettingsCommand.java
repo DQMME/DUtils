@@ -7,14 +7,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Settings implements CommandExecutor {
+public class SettingsCommand implements CommandExecutor {
     private final Inventorys inventorys = new Inventorys();
     private final Messages messages = new Messages();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player) {
             Player player = (Player) sender;
-            if(player.hasPermission("dutils.settings")) {
+            if(player.hasPermission("dutils.settings") || player.hasPermission("dutils.*")) {
                 player.openInventory(inventorys.settingsHome());
             } else {
                 player.sendMessage(messages.NO_PERM);

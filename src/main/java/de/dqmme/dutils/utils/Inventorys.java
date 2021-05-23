@@ -282,4 +282,31 @@ public class Inventorys {
 
         return inventory;
     }
+
+    public Inventory reset() {
+        Inventory inventory = Bukkit.createInventory(null, 27, "§6DUtils §7- §6Reset");
+
+        ItemStack blackGlass = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
+                .setDisplayname("§c")
+                .build();
+
+        ItemStack accept = new ItemBuilder(Material.GREEN_CONCRETE)
+                .setDisplayname("§aWelten resetten")
+                .addLore("§7Setze die Welten §aworld§7, §aworld_nether§7 und §aworld_the_end §7zurück und starte den Server neu.")
+                .build();
+
+        ItemStack decline = new ItemBuilder(Material.RED_CONCRETE)
+                .setDisplayname("§cAbbrechen")
+                .addLore("§7Setze die Welten nicht zurück.")
+                .build();
+
+        for(int i = 0; i <= 26; i++) {
+            inventory.setItem(i, blackGlass);
+        }
+
+        inventory.setItem(12, decline);
+        inventory.setItem(14, accept);
+
+        return inventory;
+    }
 }

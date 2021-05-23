@@ -9,3 +9,5 @@ commands:
   settings:
     permission: dutils.settings
   dutils:
+  reset:
+    permission: dutils.reset

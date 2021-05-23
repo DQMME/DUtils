@@ -14,5 +14,6 @@ public class JoinListener implements Listener {
         Player player = e.getPlayer();
 
         player.setMaxHealth(gameruleUtils.getMaxHealth());
+        player.setHealth(player.getHealth());
     }
 }

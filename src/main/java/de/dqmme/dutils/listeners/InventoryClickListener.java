@@ -1,5 +1,6 @@
 package de.dqmme.dutils.listeners;
 
+import de.dqmme.dutils.utils.ConfigUtils;
 import de.dqmme.dutils.utils.GameruleUtils;
 import de.dqmme.dutils.utils.Inventorys;
 import de.dqmme.dutils.utils.Messages;
@@ -16,6 +17,7 @@ public class InventoryClickListener implements Listener {
     private final Inventorys inventorys = new Inventorys();
     private final GameruleUtils gameruleUtils = new GameruleUtils();
     private final Messages messages = new Messages();
+    private final ConfigUtils configUtils = new ConfigUtils();
 
     @EventHandler
     private void onInvClick(InventoryClickEvent e) {
@@ -201,6 +203,39 @@ public class InventoryClickListener implements Listener {
                                     e.setCancelled(true);
                                     break;
                                 default:
+                            }
+                        }
+                    }
+                }
+                break;
+            case "§6DUtils §7- §6Reset":
+                if(e.getCurrentItem() != null) {
+                    if(e.getCurrentItem().hasItemMeta()) {
+                        if(e.getCurrentItem().getItemMeta().hasDisplayName()) {
+                            switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
+                                case "§cAbbrechen":
+                                    player.closeInventory();
+                                    e.setCancelled(true);
+                                    break;
+                                case "§aWelten resetten":
+                                    configUtils.setReset(true);
+                                    for(Player all : Bukkit.getOnlinePlayers()) {
+                                        all.kickPlayer("§8§l§m              §r§8[§6DUtils §7- §6Reset§8]§m§l              " +
+                                                "\n" +
+                                                "§e§l" + player.getName() + " §7hat einen Welten-Reset veranlasst." +
+                                                "\n" +
+                                                "§7Der Server sollte in §ec.a. 1 Minute §7wieder erreichbar sein." +
+                                                "\n" +
+                                                "§8§m§l                                           ");
+                                    }
+                                    System.out.println(configUtils.getReset());
+                                    Bukkit.getServer().spigot().restart();
+                                    player.closeInventory();
+                                    e.setCancelled(true);
+                                    break;
+                                case "§c":
+                                    e.setCancelled(true);
+                                    break;
                             }
                         }
                     }

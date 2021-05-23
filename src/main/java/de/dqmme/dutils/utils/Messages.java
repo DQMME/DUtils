@@ -2,8 +2,15 @@ package de.dqmme.dutils.utils;
 
 public class Messages {
     public String PREFIX = "§7[§6DUtils§7] ";
+
+    public String BUGS = PREFIX + "§7Du hast einen Bug gefunden? Melde ihn hier: §bhttps://github.com/DQMME/DUtils/issues";
+    public String PERMISSIONS = PREFIX + "§7Eine Liste an Permissions: §edutils.settings, dutils.reset, dutils.*";
+
     public String NO_PERM = PREFIX + "§cKeine Rechte.";
     public String NOT_A_PLAYER = PREFIX + "§cDieser Befehl muss als Spieler ausgeführt werden.";
+
+    public String DAMAGE_TAKEN = PREFIX + "§e%PLAYER% §7hat durch §e%CAUSE% §e%DAMAGE% §7Herzen Schaden genommen.";
+
     public String DIFFICULTY_SET = PREFIX + "§7Du hast die Schwierigkeit auf §e%DIFFICULTY% §7gesetzt.";
     public String PVP_SET = PREFIX + "§7Du hast das PvP §e%PVP%§7.";
     public String DAMAGE_MESSAGES_SET = PREFIX + "§7Du hast die Schadensnachrichten §e%MESSAGES%§7.";
