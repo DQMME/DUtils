@@ -234,7 +234,6 @@ public class InventoryClickListener implements Listener {
                                                 "\n" +
                                                 "§8§m§l                                           ");
                                     }
-                                    System.out.println(configUtils.getReset());
                                     Bukkit.getServer().spigot().restart();
                                     player.closeInventory();
                                     e.setCancelled(true);
