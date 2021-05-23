@@ -331,7 +331,7 @@ public class Inventorys {
 
         ItemStack accept = new ItemBuilder(Material.GREEN_CONCRETE)
                 .setDisplayname("§aWelten resetten")
-                .addLore("§7Setze die Welten §aworld§7, §aworld_nether§7 und §aworld_the_end §7zurück und starte den Server neu.")
+                .addLore("§7Setze alle Welten zurück und starte den Server neu.")
                 .build();
 
         ItemStack decline = new ItemBuilder(Material.RED_CONCRETE)
