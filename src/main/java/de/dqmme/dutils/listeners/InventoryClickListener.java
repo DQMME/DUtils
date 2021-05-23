@@ -4,10 +4,7 @@ import de.dqmme.dutils.utils.ConfigUtils;
 import de.dqmme.dutils.utils.GameruleUtils;
 import de.dqmme.dutils.utils.Inventorys;
 import de.dqmme.dutils.utils.Messages;
-import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
-import org.bukkit.GameRule;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -109,6 +106,7 @@ public class InventoryClickListener implements Listener {
                                         }
                                     }
                                     player.openInventory(inventorys.settingsGamerules());
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 case "§aPvP":
@@ -122,6 +120,7 @@ public class InventoryClickListener implements Listener {
                                         player.sendMessage(messages.PVP_SET.replace("%PVP%", "deaktiviert"));
                                     }
                                     player.openInventory(inventorys.settingsGamerules());
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 case "§aSchadensnachrichten":
@@ -132,6 +131,7 @@ public class InventoryClickListener implements Listener {
                                         player.sendMessage(messages.DAMAGE_MESSAGES_SET.replace("%MESSAGES%", "deaktiviert"));
                                     }
                                     player.openInventory(inventorys.settingsGamerules());
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 case "§aSuppenheilung":
@@ -142,6 +142,7 @@ public class InventoryClickListener implements Listener {
                                         player.sendMessage(messages.SOUP_SET.replace("%SOUP%", "deaktiviert"));
                                     }
                                     player.openInventory(inventorys.settingsGamerules());
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 case "§aGeteilte Leben":
@@ -152,6 +153,7 @@ public class InventoryClickListener implements Listener {
                                         player.sendMessage(messages.SPLIT_HEALTH_SET.replace("%SPLIT%", "deaktiviert"));
                                     }
                                     player.openInventory(inventorys.settingsGamerules());
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 case "§aUltra-Hardcore":
@@ -165,6 +167,7 @@ public class InventoryClickListener implements Listener {
                                         player.sendMessage(messages.UHC_SET.replace("%UHC%", "deaktiviert"));
                                     }
                                     player.openInventory(inventorys.settingsGamerules());
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 case "§aUltra-Ultra-Hardcore":
@@ -175,6 +178,7 @@ public class InventoryClickListener implements Listener {
                                         player.sendMessage(messages.UUHC_SET.replace("%UUHC%", "aktiviert"));
                                     }
                                     player.openInventory(inventorys.settingsGamerules());
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 case "§aMaximale Leben":
@@ -196,10 +200,12 @@ public class InventoryClickListener implements Listener {
                                         }
                                     }
                                     player.openInventory(inventorys.settingsGamerules());
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 case "§c":
                                     player.openInventory(inventorys.settingsHome());
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 default:

@@ -152,10 +152,18 @@ public class Inventorys {
             uuhcFirst = "§aaktivieren";
         }
 
-        int maxHealthHPLeft = gameruleUtils.getMaxHealth() + 2;
-        int maxHealthHeartsLeft = (gameruleUtils.getMaxHealth() + 2) / 2;
+        int maxHealthHPLeft;
+        int maxHealthHeartsLeft;
         int maxHealthHPRight = gameruleUtils.getMaxHealth() - 2;
         int maxHealthHeartsRight = (gameruleUtils.getMaxHealth() - 2) / 2;
+        if(gameruleUtils.getMaxHealth() == 48) {
+            maxHealthHeartsLeft = 24;
+            maxHealthHPLeft = 48;
+        } else {
+            maxHealthHeartsLeft = (gameruleUtils.getMaxHealth() + 2) / 2;
+            maxHealthHPLeft = gameruleUtils.getMaxHealth() + 2;
+        }
+
         int maxHealthHP = gameruleUtils.getMaxHealth();
         int maxHealthHearts = gameruleUtils.getMaxHealth() / 2;
 
