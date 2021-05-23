@@ -18,6 +18,8 @@ public class DUtilsCommand implements CommandExecutor {
                 case "bugs":
                     sender.sendMessage(messages.BUGS);
                     break;
+                case "reset":
+                    break;
             }
         }
         return false;

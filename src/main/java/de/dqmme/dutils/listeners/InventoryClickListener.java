@@ -1,9 +1,6 @@
 package de.dqmme.dutils.listeners;
 
-import de.dqmme.dutils.utils.ConfigUtils;
-import de.dqmme.dutils.utils.GameruleUtils;
-import de.dqmme.dutils.utils.Inventorys;
-import de.dqmme.dutils.utils.Messages;
+import de.dqmme.dutils.utils.*;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +12,7 @@ public class InventoryClickListener implements Listener {
     private final GameruleUtils gameruleUtils = new GameruleUtils();
     private final Messages messages = new Messages();
     private final ConfigUtils configUtils = new ConfigUtils();
+    private final ChallengeUtils challengeUtils = new ChallengeUtils();
 
     @EventHandler
     private void onInvClick(InventoryClickEvent e) {
@@ -42,7 +40,7 @@ public class InventoryClickListener implements Listener {
                     }
                 }
                 break;
-            case "§6Home §7- §6Gamerules":
+            case "§6Settings §7- §6Gamerules":
                 if(e.getCurrentItem() != null) {
                     if(e.getCurrentItem().hasItemMeta()) {
                         if(e.getCurrentItem().getItemMeta().hasDisplayName()) {
@@ -209,6 +207,43 @@ public class InventoryClickListener implements Listener {
                                     e.setCancelled(true);
                                     break;
                                 default:
+                            }
+                        }
+                    }
+                }
+                break;
+            case "§6Settings §7- §6Challenges":
+                if(e.getCurrentItem() != null) {
+                    if(e.getCurrentItem().hasItemMeta()) {
+                        if(e.getCurrentItem().getItemMeta().hasDisplayName()) {
+                            switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
+                                case "§aRandom-Item":
+                                    challengeUtils.setRandomItem(!challengeUtils.getRandomItem());
+                                    World worldRandomItem = Bukkit.getWorld("world_random_item");
+                                    World world = Bukkit.getWorld("world");
+                                    if(challengeUtils.getRandomItem()) {
+                                        if(worldRandomItem != null) {
+                                            Location spawnLocation = worldRandomItem.getSpawnLocation();
+                                            for(Player all : Bukkit.getOnlinePlayers()) {
+                                                all.teleport(spawnLocation);
+                                            }
+                                        }
+                                    } else {
+                                        for(Player all : Bukkit.getOnlinePlayers()) {
+                                            if(all.getLocation().getWorld().equals(worldRandomItem)) {
+                                                if(world != null) {
+                                                    all.teleport(world.getSpawnLocation());
+                                                }
+                                            }
+                                        }
+                                    }
+                                    player.openInventory(inventorys.settingsChallenges());
+                                    e.setCancelled(true);
+                                    break;
+                                case "§c":
+                                    player.openInventory(inventorys.settingsHome());
+                                    e.setCancelled(true);
+                                    break;
                             }
                         }
                     }

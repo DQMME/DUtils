@@ -6,9 +6,11 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.graalvm.compiler.hotspot.nodes.GraalHotSpotVMConfigNode;
 
 public class Inventorys {
     private final GameruleUtils gameruleUtils = new GameruleUtils();
+    private final ChallengeUtils challengeUtils = new ChallengeUtils();
 
     public Inventory settingsHome() {
         Inventory inventory = Bukkit.createInventory(null, 27, "§6Einstellungen §7- §6Home");
@@ -36,15 +38,44 @@ public class Inventorys {
     }
 
     public Inventory settingsChallenges() {
-        Inventory inventory = Bukkit.createInventory(null, 27, "");
+        String isRandomItem;
+        if(challengeUtils.getRandomItem()) {
+            isRandomItem = "§7Aktuell: §aaktiviert";
+        } else {
+            isRandomItem = "§7Aktuell: §cdeaktiviert";
+        }
+
+        String randomItemFirst;
+        if(challengeUtils.getRandomItem()) {
+            randomItemFirst = "§cdeaktivieren";
+        } else {
+            randomItemFirst = "§aaktivieren";
+        }
+
+        Inventory inventory = Bukkit.createInventory(null, 27, "§6Settings §7- §6Challenges");
 
         ItemStack blackGlass = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
                 .setDisplayname("§c")
+                .addLore("§7Kehre zurück auf die letzte Seite.")
+                .build();
+
+        ItemStack randomItem = new ItemBuilder(Material.COMMAND_BLOCK)
+                .setDisplayname("§aRandom-Item")
+                .addLore("§aBeschreibung:")
+                .addLore("§7Erhalte alle 10 Sekunden ein zufälliges §aItem.")
+                .addLore("")
+                .addLore("§aFunktion:")
+                .addLore("§7Links/Rechtsklick: " + randomItemFirst)
+                .addLore("")
+                .addLore("§aStatus:")
+                .addLore(isRandomItem)
                 .build();
 
         for(int i = 0; i <= 26; i++) {
             inventory.setItem(i, blackGlass);
         }
+
+        inventory.setItem(10, randomItem);
 
         return inventory;
     }
@@ -167,7 +198,7 @@ public class Inventorys {
         int maxHealthHP = gameruleUtils.getMaxHealth();
         int maxHealthHearts = gameruleUtils.getMaxHealth() / 2;
 
-        Inventory inventory = Bukkit.createInventory(null, 36, "§6Home §7- §6Gamerules");
+        Inventory inventory = Bukkit.createInventory(null, 36, "§6Settings §7- §6Gamerules");
 
         ItemStack blackGlass = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
                 .setDisplayname("§c")

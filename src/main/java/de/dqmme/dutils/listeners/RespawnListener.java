@@ -1,6 +1,5 @@
 package de.dqmme.dutils.listeners;
 
-import de.dqmme.dutils.DUtils;
 import de.dqmme.dutils.utils.ChallengeUtils;
 import de.dqmme.dutils.utils.GameruleUtils;
 import org.bukkit.Bukkit;
@@ -8,28 +7,19 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
-public class JoinListener implements Listener {
-    private final GameruleUtils gameruleUtils = new GameruleUtils();
+public class RespawnListener implements Listener {
     private final ChallengeUtils challengeUtils = new ChallengeUtils();
 
     @EventHandler
-    private void onJoin(PlayerJoinEvent e) {
+    private void onRespawn(PlayerRespawnEvent e) {
         Player player = e.getPlayer();
 
-        player.setMaxHealth(gameruleUtils.getMaxHealth());
-        player.setHealth(player.getHealth());
-
         if(challengeUtils.getRandomItem()) {
-            DUtils.getPlugin(DUtils.class).bossBar.addPlayer(player);
-
             World worldRandomItem = Bukkit.getWorld("world_random_item");
-
             if(worldRandomItem != null) {
-                Bukkit.getScheduler().runTaskLater(DUtils.getPlugin(DUtils.class), () -> {
-                    player.teleport(worldRandomItem.getSpawnLocation());
-                }, 3);
+                e.setRespawnLocation(worldRandomItem.getSpawnLocation());
             }
         }
     }
