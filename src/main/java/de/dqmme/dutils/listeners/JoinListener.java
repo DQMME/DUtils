@@ -3,6 +3,7 @@ package de.dqmme.dutils.listeners;
 import de.dqmme.dutils.DUtils;
 import de.dqmme.dutils.utils.ChallengeUtils;
 import de.dqmme.dutils.utils.GameruleUtils;
+import de.dqmme.dutils.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -11,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinListener implements Listener {
+    private final Messages messages = new Messages();
     private final GameruleUtils gameruleUtils = new GameruleUtils();
     private final ChallengeUtils challengeUtils = new ChallengeUtils();
 
@@ -20,6 +22,8 @@ public class JoinListener implements Listener {
 
         player.setMaxHealth(gameruleUtils.getMaxHealth());
         player.setHealth(player.getHealth());
+
+        e.setJoinMessage(messages.PLAYER_JOINED.replace("%PLAYER%", player.getName()));
 
         if(challengeUtils.getRandomItem()) {
             DUtils.getPlugin(DUtils.class).bossBar.addPlayer(player);
