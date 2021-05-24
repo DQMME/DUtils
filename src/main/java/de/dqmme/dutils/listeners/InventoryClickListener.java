@@ -237,6 +237,8 @@ public class InventoryClickListener implements Listener {
                                             DUtils.getPlugin(DUtils.class).bossBar.addPlayer(all);
                                         }
                                         player.sendMessage(messages.CHALLANGE_SET.replace("%CHALLENGE%", "Random-Item").replace("%STATUS%", "§aaktiviert"));
+                                        timerUtils.startTimer();
+                                        player.sendMessage(messages.TIMER_STARTED);
                                     } else {
                                         for(Player all : Bukkit.getOnlinePlayers()) {
                                             if(all.getLocation().getWorld().equals(worldRandomItem)) {
@@ -313,8 +315,7 @@ public class InventoryClickListener implements Listener {
                                     e.setCancelled(true);
                                     break;
                                 case "§eTimer zurücksetzen":
-                                    timerUtils.setTime(0);
-                                    timerUtils.time = 0;
+                                    timerUtils.resetTimer();
                                     player.sendMessage(messages.TIMER_RESETTED);
                                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);

@@ -12,6 +12,10 @@ public class TimerUtils {
     public BukkitRunnable bukkitRunnable;
 
     public void startTimer() {
+        for(Player all : Bukkit.getOnlinePlayers()) {
+            all.sendTitle("§aTimer gestartet.", "§7Der §eTimer §7wurde §agestartet.");
+        }
+
         time = getTime();
         bukkitRunnable = new BukkitRunnable() {
             @Override
@@ -26,14 +30,21 @@ public class TimerUtils {
     }
 
     public void stopTimer() {
+        for(Player all : Bukkit.getOnlinePlayers()) {
+            all.sendTitle("§cTimer gestoppt.", "§7Der §eTimer §7wurde §cgestoppt.");
+        }
         DUtils.getPlugin(DUtils.class).timerConf.set("Time", time);
         DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).timerConf, DUtils.getPlugin(DUtils.class).timer);
         bukkitRunnable.cancel();
     }
 
-    public void setTime(int time) {
-       DUtils.getPlugin(DUtils.class).timerConf.set("Time", time);
-        DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).timerConf, DUtils.getPlugin(DUtils.class).timer);
+    public void resetTimer() {
+       DUtils.getPlugin(DUtils.class).timerConf.set("Time", 0);
+       DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).timerConf, DUtils.getPlugin(DUtils.class).timer);
+       time = 0;
+        for(Player all : Bukkit.getOnlinePlayers()) {
+            all.sendTitle("§eTimer zurückgesetzt.", "§7Der §eTimer §7wurde §ezurückgesetzt.");
+        }
     }
 
     public int getTime() {

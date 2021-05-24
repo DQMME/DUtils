@@ -28,8 +28,7 @@ public class TimerCommand implements CommandExecutor {
                         sender.sendMessage(messages.TIMER_PAUSED);
                         break;
                     case "reset":
-                        timerUtils.setTime(0);
-                        timerUtils.time = 0;
+                        timerUtils.resetTimer();
                         sender.sendMessage(messages.TIMER_RESETTED);
                         break;
                 }
