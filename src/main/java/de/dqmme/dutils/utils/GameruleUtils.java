@@ -4,6 +4,7 @@ import de.dqmme.dutils.DUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.RenderType;
 
 import java.io.IOException;
 
@@ -192,6 +193,37 @@ public class GameruleUtils {
             setMaxHealth(20);
         }
         return DUtils.getPlugin(DUtils.class).gamerulesConf.getInt("MaxHealth");
+    }
+
+    public void setHealthInTab(boolean healthInTab) {
+        DUtils.getPlugin(DUtils.class).gamerulesConf.set("HealthInTab", healthInTab);
+        DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).gamerulesConf, DUtils.getPlugin(DUtils.class).gamerules);
+    }
+
+    public void setHealthInTabType(String renderType) {
+        DUtils.getPlugin(DUtils.class).gamerulesConf.set("HealthInTabType", renderType);
+        DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).gamerulesConf, DUtils.getPlugin(DUtils.class).gamerules);
+    }
+
+    public boolean getHealthInTab() {
+        if(DUtils.getPlugin(DUtils.class).gamerulesConf.get("HealthInTab") == null) {
+            return true;
+        } else {
+            return DUtils.getPlugin(DUtils.class).gamerulesConf.getBoolean("HealthInTab");
+        }
+    }
+
+    public RenderType getHealthInTabType() {
+        RenderType renderType;
+        if(DUtils.getPlugin(DUtils.class).gamerulesConf.get("HealthInTabType") == null) {
+            setHealthInTabType("HEARTS");
+        }
+        if(DUtils.getPlugin(DUtils.class).gamerulesConf.getString("HealthInTabType").equalsIgnoreCase("INTEGER")) {
+            renderType = RenderType.INTEGER;
+        } else {
+            renderType = RenderType.HEARTS;
+        }
+        return  renderType;
     }
 
 }

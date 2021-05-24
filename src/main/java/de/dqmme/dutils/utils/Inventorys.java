@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scoreboard.RenderType;
 import org.graalvm.compiler.hotspot.nodes.GraalHotSpotVMConfigNode;
 
 public class Inventorys {
@@ -52,6 +53,20 @@ public class Inventorys {
             randomItemFirst = "§aaktivieren";
         }
 
+        String isInventorySync;
+        if(challengeUtils.getInvSync()) {
+            isInventorySync = "§7Aktuell: §aaktiviert";
+        } else {
+            isInventorySync = "§7Aktuell: §cdeaktiviert";
+        }
+
+        String inventorySyncFirst;
+        if(challengeUtils.getInvSync()) {
+            inventorySyncFirst = "§cdeaktivieren";
+        } else {
+            inventorySyncFirst = "§aaktivieren";
+        }
+
         Inventory inventory = Bukkit.createInventory(null, 27, "§6Settings §7- §6Challenges");
 
         ItemStack blackGlass = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
@@ -71,11 +86,24 @@ public class Inventorys {
                 .addLore(isRandomItem)
                 .build();
 
+        ItemStack inventorySync = new ItemBuilder(Material.CHEST)
+                .setDisplayname("§aInventory-Sync")
+                .addLore("§aBeschreibung:")
+                .addLore("§7Das §aInventar §7aller Spieler ist synchronisiert.")
+                .addLore("")
+                .addLore("§aFunktion:")
+                .addLore("§7Links/Rechtsklick: " + inventorySyncFirst)
+                .addLore("")
+                .addLore("§aStatus:")
+                .addLore(isInventorySync)
+                .build();
+
         for(int i = 0; i <= 26; i++) {
             inventory.setItem(i, blackGlass);
         }
 
         inventory.setItem(10, randomItem);
+        inventory.setItem(11, inventorySync);
 
         return inventory;
     }
@@ -198,6 +226,34 @@ public class Inventorys {
         int maxHealthHP = gameruleUtils.getMaxHealth();
         int maxHealthHearts = gameruleUtils.getMaxHealth() / 2;
 
+        String isHealthInTab;
+        if(gameruleUtils.getHealthInTab()) {
+            isHealthInTab = "§aaktiviert";
+        } else {
+            isHealthInTab = "§cdeaktiviert";
+        }
+
+        String healthInTabType;
+        if(gameruleUtils.getHealthInTabType().equals(RenderType.HEARTS)) {
+            healthInTabType = "§cHerzen";
+        } else {
+            healthInTabType = "§aZahl";
+        }
+
+        String healthInTabLeft;
+        if(gameruleUtils.getHealthInTab()) {
+            healthInTabLeft = "§cdeaktivieren";
+        } else {
+            healthInTabLeft = "§aaktivieren";
+        }
+
+        String healthInTabRight;
+        if(gameruleUtils.getHealthInTabType().equals(RenderType.HEARTS)) {
+            healthInTabRight = "§aZahl";
+        } else {
+            healthInTabRight = "§cHerzen";
+        }
+
         Inventory inventory = Bukkit.createInventory(null, 36, "§6Settings §7- §6Gamerules");
 
         ItemStack blackGlass = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
@@ -306,6 +362,19 @@ public class Inventorys {
                 .addLore("§7Aktuell: §c" + maxHealthHP + " HP§7/ §c" + maxHealthHearts + " Herzen")
                 .build();
 
+        ItemStack healthInTab = new ItemBuilder(Material.REDSTONE)
+                .setDisplayname("§aHerzen im Tab")
+                .addLore("§aBeschreibung:")
+                .addLore("§7Lasse die §aHerzen §7der Spieler in der Tablist anzeigen.")
+                .addLore("")
+                .addLore("§aFunktion:")
+                .addLore("§7Linksklick: " + healthInTabLeft)
+                .addLore("§7Rechtsklick: " + healthInTabRight)
+                .addLore("")
+                .addLore("§aStatus:")
+                .addLore("§7Aktuell: " + isHealthInTab + "§7, " + healthInTabType)
+                .build();
+
         for(int i = 0; i <= 35; i++) {
             inventory.setItem(i, blackGlass);
         }
@@ -318,6 +387,7 @@ public class Inventorys {
         inventory.setItem(15, uhc);
         inventory.setItem(16, uuhc);
         inventory.setItem(19, health);
+        inventory.setItem(20, healthInTab);
 
         return inventory;
     }

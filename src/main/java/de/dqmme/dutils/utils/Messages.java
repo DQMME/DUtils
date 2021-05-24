@@ -29,6 +29,8 @@ public class Messages {
     public String UHC_SET = PREFIX + "§7Du hast die natürliche Regeneration §e%UHC%§7.";
     public String UUHC_SET = PREFIX + "§7Du hast die komplette Regeneration §e%UUHC%§7.";
     public String MAX_HEALTH_SET = PREFIX + "§7Du hast die Maximalen Leben auf §e%HEALTH% §7gesetzt.";
+    public String HEALTH_IN_TAB_SET = PREFIX + "§7Du hast die Leben im Tab §e%HEALTH%§7.";
+    public String HEALTH_IN_TAB_TYPE_SET = PREFIX + "§7Du hast die Leben im Tab auf §e%HEALTH% §7gesetzt.";
 
     public String CHALLANGE_SET = PREFIX + "§7Du hast die Challenge §e%CHALLENGE% %STATUS%§7.";
 }

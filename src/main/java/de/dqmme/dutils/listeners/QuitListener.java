@@ -1,6 +1,7 @@
 package de.dqmme.dutils.listeners;
 
 import de.dqmme.dutils.DUtils;
+import de.dqmme.dutils.utils.GameruleUtils;
 import de.dqmme.dutils.utils.Messages;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,6 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class QuitListener implements Listener {
     private final Messages messages = new Messages();
+    private final GameruleUtils gameruleUtils = new GameruleUtils();
 
     @EventHandler
     private void onQuit(PlayerQuitEvent e) {
@@ -19,5 +21,6 @@ public class QuitListener implements Listener {
         if(DUtils.getPlugin(DUtils.class).bossBar.getPlayers().contains(player)) {
             DUtils.getPlugin(DUtils.class).bossBar.removePlayer(player);
         }
+
     }
 }

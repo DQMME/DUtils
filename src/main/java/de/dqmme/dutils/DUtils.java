@@ -159,12 +159,18 @@ public final class DUtils extends JavaPlugin {
     public void listenerRegistration() {
         PluginManager p = Bukkit.getPluginManager();
         p.registerEvents(new HitListener(), this);
+        p.registerEvents(new SwapListener(), this);
         p.registerEvents(new JoinListener(), this);
         p.registerEvents(new QuitListener(), this);
+        p.registerEvents(new DropListener(), this);
         p.registerEvents(new DeathListener(), this);
         p.registerEvents(new DamageListener(), this);
+        p.registerEvents(new CollectListener(), this);
         p.registerEvents(new RespawnListener(), this);
+        p.registerEvents(new ConsumeListener(), this);
         p.registerEvents(new InteractListener(), this);
+        p.registerEvents(new BlockBreakListener(), this);
+        p.registerEvents(new BlockPlaceListener(), this);
         p.registerEvents(new RegenerationListener(), this);
         p.registerEvents(new InventoryClickListener(), this);
     }
