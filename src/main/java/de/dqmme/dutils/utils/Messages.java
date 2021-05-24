@@ -14,8 +14,8 @@ public class Messages {
     public String DAMAGE_TAKEN = PREFIX + "§e§l%PLAYER% §7hat durch §e%CAUSE% §e%DAMAGE% §7Herzen Schaden genommen.";
 
     public String PLAYER_DIED = PREFIX + "§e§l%PLAYER% §r§7ist gestorben.";
-    public String PLAYER_JOINED = PREFIX + "§e§l%PLAYER% hat das Spiel betreten.";
-    public String PLAYER_LEFT = PREFIX + "§e§l%PLAYER% hat das Spiel verlassen.";
+    public String PLAYER_JOINED = PREFIX + "§e§l%PLAYER% §7hat das Spiel betreten.";
+    public String PLAYER_LEFT = PREFIX + "§e§l%PLAYER% §7hat das Spiel verlassen.";
 
     public String TIMER_STARTED = PREFIX + "§7Du hast den Timer gestartet.";
     public String TIMER_PAUSED = PREFIX + "§7Du hast den Timer pausiert.";
