@@ -375,9 +375,9 @@ public class Inventorys {
             inventory.setItem(i, blackGlass);
         }
 
-        inventory.setItem(10, stop);
-        inventory.setItem(12, start);
-        inventory.setItem(14, reset);
+        inventory.setItem(12, stop);
+        inventory.setItem(14, start);
+        inventory.setItem(16, reset);
 
         return inventory;
     }
