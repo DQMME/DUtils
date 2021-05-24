@@ -13,7 +13,7 @@ public class TimerUtils {
 
     public void startTimer() {
         for(Player all : Bukkit.getOnlinePlayers()) {
-            all.sendTitle("§aTimer gestartet.", "§7Der §eTimer §7wurde §agestartet.");
+            all.sendTitle("§aTimer gestartet.", "§7Der §eTimer §7wurde §agestartet.", 5, 60, 5);
         }
 
         time = getTime();
@@ -31,7 +31,7 @@ public class TimerUtils {
 
     public void stopTimer() {
         for(Player all : Bukkit.getOnlinePlayers()) {
-            all.sendTitle("§cTimer gestoppt.", "§7Der §eTimer §7wurde §cgestoppt.");
+            all.sendTitle("§cTimer gestoppt.", "§7Der §eTimer §7wurde §cgestoppt.", 5, 60, 5);
         }
         DUtils.getPlugin(DUtils.class).timerConf.set("Time", time);
         DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).timerConf, DUtils.getPlugin(DUtils.class).timer);
@@ -43,7 +43,7 @@ public class TimerUtils {
        DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).timerConf, DUtils.getPlugin(DUtils.class).timer);
        time = 0;
         for(Player all : Bukkit.getOnlinePlayers()) {
-            all.sendTitle("§eTimer zurückgesetzt.", "§7Der §eTimer §7wurde §ezurückgesetzt.");
+            all.sendTitle("§eTimer zurückgesetzt.", "§7Der §eTimer §7wurde §ezurückgesetzt.", 5, 60, 5);
         }
     }
 
