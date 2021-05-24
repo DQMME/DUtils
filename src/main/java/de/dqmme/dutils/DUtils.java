@@ -161,6 +161,7 @@ public final class DUtils extends JavaPlugin {
         p.registerEvents(new HitListener(), this);
         p.registerEvents(new JoinListener(), this);
         p.registerEvents(new QuitListener(), this);
+        p.registerEvents(new DeathListener(), this);
         p.registerEvents(new DamageListener(), this);
         p.registerEvents(new RespawnListener(), this);
         p.registerEvents(new InteractListener(), this);

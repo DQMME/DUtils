@@ -1,10 +1,12 @@
 package de.dqmme.dutils.listeners;
 
+import de.dqmme.dutils.DUtils;
 import de.dqmme.dutils.utils.GameruleUtils;
 import de.dqmme.dutils.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -15,7 +17,7 @@ public class DamageListener implements Listener {
 
     public String damageCause;
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     private void onDamage(EntityDamageEvent e) {
         if(e.getEntity() instanceof Player) {
             Player player = (Player) e.getEntity();
@@ -41,7 +43,7 @@ public class DamageListener implements Listener {
                     damageCause = "zu viele Entitys";
                 } else if (e.getCause().equals(EntityDamageEvent.DamageCause.CUSTOM)) {
                     if(gameruleUtils.getSplitHealth()) {
-                        damageCause = "SplitHealth";
+                        damageCause = null;
                     } else {
                         damageCause = "Eigen";
                     }
@@ -52,7 +54,7 @@ public class DamageListener implements Listener {
                 } else if(e.getCause().equals(EntityDamageEvent.DamageCause.DRYOUT)) {
                     damageCause = "Austrocknen";
                 } else if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
-                    damageCause = hitListener.cause;
+                    damageCause = null;
                 } else if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)) {
                     damageCause = "Explosion [CREEPER]";
                 } else if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)) {

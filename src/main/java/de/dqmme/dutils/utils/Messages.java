@@ -5,11 +5,15 @@ public class Messages {
 
     public String BUGS = PREFIX + "§7Du hast einen Bug gefunden? Melde ihn hier: §bhttps://github.com/DQMME/DUtils/issues";
     public String PERMISSIONS = PREFIX + "§7Eine Liste an Permissions: §edutils.settings, dutils.reset, dutils.timer, dutils.*";
+    public String RESET = PREFIX + "§7Ein Reset löscht folgende Welten: §eworld, world_nether, world_the_end, world_random_item";
+    public String SOURCE = PREFIX + "§7Das Plugin ist OpenSource. Den Code findest du hier: §bhttps://github.com/DQMME/DUtils";
 
     public String NO_PERM = PREFIX + "§cKeine Rechte.";
     public String NOT_A_PLAYER = PREFIX + "§cDieser Befehl muss als Spieler ausgeführt werden.";
 
-    public String DAMAGE_TAKEN = PREFIX + "§e%PLAYER% §7hat durch §e%CAUSE% §e%DAMAGE% §7Herzen Schaden genommen.";
+    public String DAMAGE_TAKEN = PREFIX + "§e§l%PLAYER% §7hat durch §e%CAUSE% §e%DAMAGE% §7Herzen Schaden genommen.";
+
+    public String PLAYER_DIED = PREFIX + "§e§l%PLAYER% §r§7ist gestorben.";
 
     public String TIMER_STARTED = PREFIX + "§7Du hast den Timer gestartet.";
     public String TIMER_PAUSED = PREFIX + "§7Du hast den Timer pausiert.";
