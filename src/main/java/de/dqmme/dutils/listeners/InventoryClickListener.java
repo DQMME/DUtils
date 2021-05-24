@@ -7,6 +7,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class InventoryClickListener implements Listener {
     private final Inventorys inventorys = new Inventorys();
@@ -236,6 +242,18 @@ public class InventoryClickListener implements Listener {
                                         for(Player all : Bukkit.getOnlinePlayers()) {
                                             DUtils.getPlugin(DUtils.class).bossBar.addPlayer(all);
                                         }
+                                        new BukkitRunnable() {
+                                            @Override
+                                            public void run() {
+                                                if(challengeUtils.getRandomItem()) {
+                                                    for(Player all : Bukkit.getOnlinePlayers()) {
+                                                        addRandomItem(all);
+                                                    }
+                                                } else {
+                                                    cancel();
+                                                }
+                                            }
+                                        }.runTaskTimerAsynchronously(DUtils.getPlugin(DUtils.class), 0, 10*20);
                                         player.sendMessage(messages.CHALLANGE_SET.replace("%CHALLENGE%", "Random-Item").replace("%STATUS%", "§aaktiviert"));
                                         timerUtils.startTimer();
                                         player.sendMessage(messages.TIMER_STARTED);
@@ -328,6 +346,19 @@ public class InventoryClickListener implements Listener {
                     }
                 }
                 break;
+        }
+    }
+
+    public void addRandomItem(Player player) {
+        if(challengeUtils.getRandomItem()) {
+            Random random = new Random();
+            List<Material> materials = Arrays.asList(Material.values());
+            Material randomMaterial = materials.get(random.nextInt(materials.size()));
+            if(player.getInventory().firstEmpty() != -1) {
+                player.getInventory().addItem(new ItemStack(randomMaterial));
+            } else {
+                player.getWorld().dropItemNaturally(player.getLocation(), new ItemStack(randomMaterial));
+            }
         }
     }
 }
