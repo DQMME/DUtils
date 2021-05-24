@@ -1,5 +1,6 @@
 package de.dqmme.dutils.listeners;
 
+import de.dqmme.dutils.DUtils;
 import de.dqmme.dutils.utils.*;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -11,6 +12,7 @@ public class InventoryClickListener implements Listener {
     private final Inventorys inventorys = new Inventorys();
     private final GameruleUtils gameruleUtils = new GameruleUtils();
     private final Messages messages = new Messages();
+    private final TimerUtils timerUtils = new TimerUtils();
     private final ConfigUtils configUtils = new ConfigUtils();
     private final ChallengeUtils challengeUtils = new ChallengeUtils();
 
@@ -219,8 +221,10 @@ public class InventoryClickListener implements Listener {
                             switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                                 case "§aRandom-Item":
                                     challengeUtils.setRandomItem(!challengeUtils.getRandomItem());
+
                                     World worldRandomItem = Bukkit.getWorld("world_random_item");
                                     World world = Bukkit.getWorld("world");
+
                                     if(challengeUtils.getRandomItem()) {
                                         if(worldRandomItem != null) {
                                             Location spawnLocation = worldRandomItem.getSpawnLocation();
@@ -228,6 +232,11 @@ public class InventoryClickListener implements Listener {
                                                 all.teleport(spawnLocation);
                                             }
                                         }
+                                        DUtils.getPlugin(DUtils.class).runBar(DUtils.getPlugin(DUtils.class).bossBar);
+                                        for(Player all : Bukkit.getOnlinePlayers()) {
+                                            DUtils.getPlugin(DUtils.class).bossBar.addPlayer(all);
+                                        }
+                                        player.sendMessage(messages.CHALLANGE_SET.replace("%CHALLENGE%", "Random-Item").replace("%STATUS%", "§aaktiviert"));
                                     } else {
                                         for(Player all : Bukkit.getOnlinePlayers()) {
                                             if(all.getLocation().getWorld().equals(worldRandomItem)) {
@@ -236,11 +245,14 @@ public class InventoryClickListener implements Listener {
                                                 }
                                             }
                                         }
+                                        player.sendMessage(messages.CHALLANGE_SET.replace("%CHALLENGE%", "Random-Item").replace("%STATUS%", "§cdeaktiviert"));
                                     }
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     player.openInventory(inventorys.settingsChallenges());
                                     e.setCancelled(true);
                                     break;
                                 case "§c":
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     player.openInventory(inventorys.settingsHome());
                                     e.setCancelled(true);
                                     break;
@@ -255,10 +267,12 @@ public class InventoryClickListener implements Listener {
                         if(e.getCurrentItem().getItemMeta().hasDisplayName()) {
                             switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                                 case "§cAbbrechen":
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     player.closeInventory();
                                     e.setCancelled(true);
                                     break;
                                 case "§aWelten resetten":
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     configUtils.setReset(true);
                                     for(Player all : Bukkit.getOnlinePlayers()) {
                                         all.kickPlayer("§8§l§m              §r§8[§6DUtils §7- §6Reset§8]§m§l              " +
@@ -271,6 +285,38 @@ public class InventoryClickListener implements Listener {
                                     }
                                     Bukkit.getServer().spigot().restart();
                                     player.closeInventory();
+                                    e.setCancelled(true);
+                                    break;
+                                case "§c":
+                                    e.setCancelled(true);
+                                    break;
+                            }
+                        }
+                    }
+                }
+                break;
+            case "§6DUtils §7- §6Timer":
+                if(e.getCurrentItem() != null) {
+                    if(e.getCurrentItem().hasItemMeta()) {
+                        if(e.getCurrentItem().getItemMeta().hasDisplayName()) {
+                            switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
+                                case "§cTimer stoppen":
+                                    timerUtils.stopTimer();
+                                    player.sendMessage(messages.TIMER_PAUSED);
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
+                                    e.setCancelled(true);
+                                    break;
+                                case "§aTimer starten":
+                                    timerUtils.startTimer();
+                                    player.sendMessage(messages.TIMER_STARTED);
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
+                                    e.setCancelled(true);
+                                    break;
+                                case "§eTimer zurücksetzen":
+                                    timerUtils.setTime(0);
+                                    timerUtils.time = 0;
+                                    player.sendMessage(messages.TIMER_RESETTED);
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 case "§c":

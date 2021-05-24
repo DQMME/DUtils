@@ -9,5 +9,7 @@ commands:
   settings:
     permission: dutils.settings
   dutils:
+  timer:
+    permission: dutils.timer
   reset:
     permission: dutils.reset

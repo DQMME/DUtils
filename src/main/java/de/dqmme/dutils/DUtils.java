@@ -1,13 +1,15 @@
 package de.dqmme.dutils;
 
+import de.dqmme.dutils.autocomplete.DUtilsComplete;
+import de.dqmme.dutils.autocomplete.ResetComplete;
+import de.dqmme.dutils.autocomplete.SettingsComplete;
+import de.dqmme.dutils.autocomplete.TimerComplete;
 import de.dqmme.dutils.commands.DUtilsCommand;
 import de.dqmme.dutils.commands.ResetCommand;
 import de.dqmme.dutils.commands.SettingsCommand;
+import de.dqmme.dutils.commands.TimerCommand;
 import de.dqmme.dutils.listeners.*;
-import de.dqmme.dutils.utils.ChallengeUtils;
-import de.dqmme.dutils.utils.ConfigUtils;
-import de.dqmme.dutils.utils.EmptyChunkGenerator;
-import de.dqmme.dutils.utils.GameruleUtils;
+import de.dqmme.dutils.utils.*;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -27,27 +29,34 @@ import java.util.*;
 
 public final class DUtils extends JavaPlugin {
 
+    public File timer = new File(getDataFolder(), "Timer.yml");
+    public YamlConfiguration timerConf = YamlConfiguration.loadConfiguration(timer);
+
     public File config = new File(getDataFolder(), "Config.yml");
     public YamlConfiguration configConf = YamlConfiguration.loadConfiguration(config);
 
-    public File challenges = new File(getDataFolder(), "Challenges.yml");
-    public YamlConfiguration challengesConf = YamlConfiguration.loadConfiguration(challenges);
 
     public File gamerules = new File(getDataFolder(), "Gamerules.yml");
     public YamlConfiguration gamerulesConf = YamlConfiguration.loadConfiguration(gamerules);
 
+    public File challenges = new File(getDataFolder(), "Challenges.yml");
+    public YamlConfiguration challengesConf = YamlConfiguration.loadConfiguration(challenges);
+
+
+    private final TimerUtils timerUtils = new TimerUtils();
+    private final ConfigUtils configUtils = new ConfigUtils();
     private final GameruleUtils gameruleUtils = new GameruleUtils();
     private final ChallengeUtils challengeUtils = new ChallengeUtils();
-    private final ConfigUtils configUtils = new ConfigUtils();
-    private final JoinListener joinListener = new JoinListener();
 
     public BossBar bossBar = Bukkit.createBossBar("dummy", BarColor.YELLOW, BarStyle.SOLID);
 
     @Override
     public void onEnable() {
-        registerCommands();
+        commandRegistration();
         listenerRegistration();
+        tabCompleterRegistration();
 
+        saveFile(timerConf, timer);
         saveFile(configConf, config);
         saveFile(gamerulesConf, gamerules);
         saveFile(challengesConf, challenges);
@@ -78,7 +87,9 @@ public final class DUtils extends JavaPlugin {
             spawnLocation.getBlock().setType(Material.BEDROCK);
         }
 
-        runBar(bossBar);
+        if(challengeUtils.getRandomItem()) {
+            runBar(bossBar);
+        }
 
         new BukkitRunnable() {
             @Override
@@ -126,13 +137,23 @@ public final class DUtils extends JavaPlugin {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            timerUtils.saveTime();
         }
     }
 
-    public void registerCommands() {
+    public void commandRegistration() {
+        getCommand("timer").setExecutor(new TimerCommand());
         getCommand("reset").setExecutor(new ResetCommand());
         getCommand("dutils").setExecutor(new DUtilsCommand());
         getCommand("settings").setExecutor(new SettingsCommand());
+    }
+
+    public void tabCompleterRegistration() {
+        getCommand("timer").setTabCompleter(new TimerComplete());
+        getCommand("reset").setTabCompleter(new ResetComplete());
+        getCommand("dutils").setTabCompleter(new DUtilsComplete());
+        getCommand("settings").setTabCompleter(new SettingsComplete());
     }
 
     public void listenerRegistration() {

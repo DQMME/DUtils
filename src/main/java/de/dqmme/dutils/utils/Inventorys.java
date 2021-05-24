@@ -348,4 +348,37 @@ public class Inventorys {
 
         return inventory;
     }
+
+    public Inventory timer() {
+        Inventory inventory = Bukkit.createInventory(null, 27, "§6DUtils §7- §6Timer");
+
+        ItemStack blackGlass = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
+                .setDisplayname("§c")
+                .build();
+
+        ItemStack stop = new ItemBuilder(Material.RED_CONCRETE)
+                .setDisplayname("§cTimer stoppen")
+                .addLore("§cStoppe §7den Timer.")
+                .build();
+
+        ItemStack start = new ItemBuilder(Material.GREEN_CONCRETE)
+                .setDisplayname("§aTimer starten")
+                .addLore("§aStarte §7den Timer.")
+                .build();
+
+        ItemStack reset = new ItemBuilder(Material.YELLOW_CONCRETE)
+                .setDisplayname("§eTimer zurücksetzen")
+                .addLore("§eSetze §7den Timer zurück.")
+                .build();
+
+        for(int i = 0; i <= 26; i++) {
+            inventory.setItem(i, blackGlass);
+        }
+
+        inventory.setItem(10, stop);
+        inventory.setItem(12, start);
+        inventory.setItem(14, reset);
+
+        return inventory;
+    }
 }
