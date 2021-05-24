@@ -96,7 +96,9 @@ public class DamageListener implements Listener {
                 } else if(e.getCause().equals(EntityDamageEvent.DamageCause.WITHER)) {
                     damageCause = "Wither";
                 }
-                Bukkit.broadcastMessage(messages.DAMAGE_TAKEN.replace("%PLAYER%", player.getName()).replace("%CAUSE%", damageCause).replace("%DAMAGE%", hearts + ""));
+                if(damageCause != null) {
+                    Bukkit.broadcastMessage(messages.DAMAGE_TAKEN.replace("%PLAYER%", player.getName()).replace("%CAUSE%", damageCause).replace("%DAMAGE%", hearts + ""));
+                }
             }
         }
     }
