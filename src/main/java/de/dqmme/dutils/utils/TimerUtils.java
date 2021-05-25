@@ -12,24 +12,30 @@ public class TimerUtils {
     public BukkitRunnable bukkitRunnable;
 
     public void startTimer() {
-        for(Player all : Bukkit.getOnlinePlayers()) {
-            all.sendTitle("§aTimer gestartet.", "§7Der §eTimer §7wurde §agestartet.", 5, 60, 5);
-        }
-
-        time = getTime();
-        bukkitRunnable = new BukkitRunnable() {
-            @Override
-            public void run() {
-                for(Player all : Bukkit.getOnlinePlayers()) {
-                    all.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§6§l" + shortInteger(time)));
-                }
-                time++;
+        if(!isRunning()) {
+            for(Player all : Bukkit.getOnlinePlayers()) {
+                all.sendTitle("§aTimer gestartet.", "§7Der §eTimer §7wurde §agestartet.", 5, 60, 5);
             }
-        };
-        bukkitRunnable.runTaskTimer(DUtils.getPlugin(DUtils.class), 0, 20);
+
+            time = getTime();
+            bukkitRunnable = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    for(Player all : Bukkit.getOnlinePlayers()) {
+                        all.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§6§l" + shortInteger(time)));
+                    }
+                    setRunning();
+                    time++;
+                }
+            };
+            bukkitRunnable.runTaskTimer(DUtils.getPlugin(DUtils.class), 0, 20);
+        }
     }
 
+
     public void stopTimer() {
+        setPaused();
+
         for(Player all : Bukkit.getOnlinePlayers()) {
             all.sendTitle("§cTimer gestoppt.", "§7Der §eTimer §7wurde §cgestoppt.", 5, 60, 5);
         }
@@ -58,6 +64,20 @@ public class TimerUtils {
     public void saveTime() {
         DUtils.getPlugin(DUtils.class).timerConf.set("Time", time);
         DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).timerConf, DUtils.getPlugin(DUtils.class).timer);
+    }
+
+    public void setPaused() {
+        DUtils.getPlugin(DUtils.class).timerConf.set("Timer-Running", false);
+        DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).timerConf, DUtils.getPlugin(DUtils.class).timer);
+    }
+
+    public void setRunning() {
+        DUtils.getPlugin(DUtils.class).timerConf.set("Timer-Running", true);
+        DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).timerConf, DUtils.getPlugin(DUtils.class).timer);
+    }
+
+    public boolean isRunning() {
+        return DUtils.getPlugin(DUtils.class).timerConf.getBoolean("Timer-Running");
     }
 
     public String shortInteger(int duration) {

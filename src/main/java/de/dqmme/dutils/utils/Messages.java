@@ -13,6 +13,8 @@ public class Messages {
 
     public String DAMAGE_TAKEN = PREFIX + "§e§l%PLAYER% §7hat durch §e%CAUSE% §e%DAMAGE% §7Herzen Schaden genommen.";
 
+    public String EFFECT_ADDED = PREFIX + "§7Allen Spielern wurde der Effekt §e§l%EFFECT% §7mit der Stufe §e§l%LEVEL% §7hinzugefügt.";
+
     public String PLAYER_DIED = PREFIX + "§e§l%PLAYER% §r§7ist gestorben.";
     public String PLAYER_JOINED = PREFIX + "§e§l%PLAYER% §7hat das Spiel betreten.";
     public String PLAYER_LEFT = PREFIX + "§e§l%PLAYER% §7hat das Spiel verlassen.";

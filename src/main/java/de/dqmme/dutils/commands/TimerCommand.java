@@ -20,15 +20,19 @@ public class TimerCommand implements CommandExecutor {
                     case "start":
                     case "resume":
                         timerUtils.startTimer();
+                        timerUtils.setRunning();
                         sender.sendMessage(messages.TIMER_STARTED);
                         break;
                     case "pause":
                     case "stop":
                         timerUtils.stopTimer();
+                        timerUtils.setPaused();
                         sender.sendMessage(messages.TIMER_PAUSED);
                         break;
                     case "reset":
                         timerUtils.resetTimer();
+                        timerUtils.stopTimer();
+                        timerUtils.setPaused();
                         sender.sendMessage(messages.TIMER_RESETTED);
                         break;
                 }

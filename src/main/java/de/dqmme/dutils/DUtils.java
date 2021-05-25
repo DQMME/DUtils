@@ -52,16 +52,22 @@ public final class DUtils extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        getLogger().info("§7[§6DUtil-Debug§7] §7Registering Commands.");
         commandRegistration();
-        listenerRegistration();
         tabCompleterRegistration();
+        getLogger().info("§7[§6DUtil-Debug§7] §7Registering Commands complete.");
+        getLogger().info("§7[§6DUtil-Debug§7] §7Registering Listeners.");
+        listenerRegistration();
+        getLogger().info("§7[§6DUtil-Debug§7] §7Registering Listeners complete.");
 
+        getLogger().info("§7[§6DUtil-Debug§7] §7Loading Files.");
         saveFile(timerConf, timer);
         saveFile(configConf, config);
         saveFile(gamerulesConf, gamerules);
         saveFile(challengesConf, challenges);
+        getLogger().info("§7[§6DUtil-Debug§7] §7Loading Files complete.");
 
-
+        getLogger().info("§7[§6DUtil-Debug§7] §7Setting Gamerules.");
         for (World worlds : Bukkit.getWorlds()) {
             worlds.setGameRule(GameRule.NATURAL_REGENERATION, gameruleUtils.getUHC());
             worlds.setPVP(gameruleUtils.getPvP());
@@ -73,12 +79,17 @@ public final class DUtils extends JavaPlugin {
                 worlds.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
             }
         }
-
-        WorldCreator worldCreator = new WorldCreator("world_random_item");
-        worldCreator.generator(new EmptyChunkGenerator());
-        worldCreator.createWorld();
+        getLogger().info("§7[§6DUtil-Debug§7] §7Setting Gamerules complete.");
 
         World worldRandomItem = Bukkit.getWorld("world_random_item");
+
+        if(worldRandomItem == null) {
+            getLogger().info("§7[§6DUtil-Debug§7] §7Creating World world_random_Item.");
+            WorldCreator worldCreator = new WorldCreator("world_random_item");
+            worldCreator.generator(new EmptyChunkGenerator());
+            worldCreator.createWorld();
+            getLogger().info("§7[§6DUtil-Debug§7] §7Creating World world_random_Item complete.");
+        }
 
         if (worldRandomItem != null) {
             Location newSpawn = new Location(worldRandomItem, 0.5, 65, 0.5);
@@ -89,6 +100,10 @@ public final class DUtils extends JavaPlugin {
 
         if(challengeUtils.getRandomItem()) {
             runBar(bossBar);
+        }
+
+        if(timerUtils.isRunning()) {
+            timerUtils.startTimer();
         }
 
         new BukkitRunnable() {
@@ -112,27 +127,36 @@ public final class DUtils extends JavaPlugin {
     @Override
     public void onDisable() {
         if(configUtils.getReset()) {
+            getLogger().info("§7[§6DUtil-Debug§7] §7Removing Random-Item World complete.");
             World world = Bukkit.getWorld("world");
             World nether = Bukkit.getWorld("world_nether");
             World end = Bukkit.getWorld("world_the_end");
             World worldRandomItem = Bukkit.getWorld("world_random_item");
             try {
+                getLogger().info("§7[§6DUtil-Debug§7] §7Removing World world.");
                 Files.walk(world.getWorldFolder().toPath())
                         .sorted(Comparator.reverseOrder())
                         .map(Path::toFile)
                         .forEach(File::delete);
+                getLogger().info("§7[§6DUtil-Debug§7] §7Removing World world complete.");
+                getLogger().info("§7[§6DUtil-Debug§7] §7Removing World world_nether.");
                 Files.walk(nether.getWorldFolder().toPath())
                         .sorted(Comparator.reverseOrder())
                         .map(Path::toFile)
                         .forEach(File::delete);
+                getLogger().info("§7[§6DUtil-Debug§7] §7Removing World world_nether complete.");
+                getLogger().info("§7[§6DUtil-Debug§7] §7Removing World world_the_end.");
                 Files.walk(end.getWorldFolder().toPath())
                         .sorted(Comparator.reverseOrder())
                         .map(Path::toFile)
                         .forEach(File::delete);
+                getLogger().info("§7[§6DUtil-Debug§7] §7Removing World world_the_end complete.");
+                getLogger().info("§7[§6DUtil-Debug§7] §7Removing World world_random_Item.");
                 Files.walk(worldRandomItem.getWorldFolder().toPath())
                         .sorted(Comparator.reverseOrder())
                         .map(Path::toFile)
                         .forEach(File::delete);
+                getLogger().info("§7[§6DUtil-Debug§7] §7Removing World world_random_Item complete.");
                 configUtils.setReset(false);
             } catch (IOException e) {
                 e.printStackTrace();

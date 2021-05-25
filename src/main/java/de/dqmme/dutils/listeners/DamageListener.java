@@ -1,19 +1,26 @@
 package de.dqmme.dutils.listeners;
 
-import de.dqmme.dutils.DUtils;
+import de.dqmme.dutils.utils.ChallengeUtils;
 import de.dqmme.dutils.utils.GameruleUtils;
 import de.dqmme.dutils.utils.Messages;
+import de.dqmme.dutils.utils.TimerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class DamageListener implements Listener {
+    private final ChallengeUtils challengeUtils = new ChallengeUtils();
     private final GameruleUtils gameruleUtils = new GameruleUtils();
+    private final TimerUtils timerUtils = new TimerUtils();
     private final Messages messages = new Messages();
-    private final HitListener hitListener = new HitListener();
 
     public String damageCause;
 
@@ -21,13 +28,30 @@ public class DamageListener implements Listener {
     private void onDamage(EntityDamageEvent e) {
         if(e.getEntity() instanceof Player) {
             Player player = (Player) e.getEntity();
-            double damage = e.getDamage();
             double hearts = e.getDamage() / 2;
+
+            e.setCancelled(!timerUtils.isRunning());
+
+            if(timerUtils.isRunning()) {
+                if(challengeUtils.getRandomEffect()) {
+                    for(Player all : Bukkit.getOnlinePlayers()) {
+                        Random random = new Random();
+                        List<PotionEffectType> effects = Arrays.asList(PotionEffectType.values());
+                        PotionEffectType randomEffect = effects.get(random.nextInt(effects.size()));
+                        if (all.hasPotionEffect(randomEffect)) {
+                            all.addPotionEffect(randomEffect.createEffect(999999999, all.getPotionEffect(randomEffect).getAmplifier()+1));
+                            all.sendMessage(messages.EFFECT_ADDED.replace("%EFFECT%", randomEffect.getName()).replace("%LEVEL%", all.getPotionEffect(randomEffect).getAmplifier()+1 + ""));
+                        } else {
+                            all.addPotionEffect(randomEffect.createEffect(999999999, 0));
+                            all.sendMessage(messages.EFFECT_ADDED.replace("%EFFECT%", randomEffect.getName()).replace("%LEVEL%", "1"));
+                        }
+                    }
+                }
+            }
 
             if(gameruleUtils.getSplitHealth()) {
                 if(e.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
                     for(Player all : Bukkit.getOnlinePlayers()) {
-                        //all.setHealth(all.getHealth()-e.getDamage());
                         all.damage(e.getDamage());
                         e.setCancelled(true);
                     }

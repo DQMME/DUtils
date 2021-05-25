@@ -304,6 +304,20 @@ public class InventoryClickListener implements Listener {
                                     }
 
                                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
+                                    timerUtils.startTimer();
+                                    player.openInventory(inventorys.settingsChallenges());
+                                    e.setCancelled(true);
+                                    break;
+                                case "§aRandom-Effect":
+                                    challengeUtils.setRandomEffect(!challengeUtils.getRandomEffect());
+
+                                    if(challengeUtils.getRandomEffect()) {
+                                        player.sendMessage(messages.CHALLANGE_SET.replace("%CHALLENGE%", "Random-Effect").replace("%STATUS%", "§aaktiviert"));
+                                    } else {
+                                        player.sendMessage(messages.CHALLANGE_SET.replace("%CHALLENGE%", "Random-Effect").replace("%STATUS%", "§cdeaktiviert"));
+                                    }
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
+                                    timerUtils.startTimer();
                                     player.openInventory(inventorys.settingsChallenges());
                                     e.setCancelled(true);
                                     break;
@@ -330,6 +344,11 @@ public class InventoryClickListener implements Listener {
                                 case "§aWelten resetten":
                                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     configUtils.setReset(true);
+                                    timerUtils.startTimer();
+                                    timerUtils.stopTimer();
+                                    timerUtils.resetTimer();
+                                    timerUtils.setPaused();
+                                    timerUtils.saveTime();
                                     for(Player all : Bukkit.getOnlinePlayers()) {
                                         all.kickPlayer("§8§l§m              §r§8[§6DUtils §7- §6Reset§8]§m§l              " +
                                                 "\n" +
@@ -358,12 +377,14 @@ public class InventoryClickListener implements Listener {
                             switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                                 case "§cTimer stoppen":
                                     timerUtils.stopTimer();
+                                    timerUtils.setPaused();
                                     player.sendMessage(messages.TIMER_PAUSED);
                                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;
                                 case "§aTimer starten":
                                     timerUtils.startTimer();
+                                    timerUtils.setRunning();
                                     player.sendMessage(messages.TIMER_STARTED);
                                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
@@ -371,6 +392,8 @@ public class InventoryClickListener implements Listener {
                                 case "§eTimer zurücksetzen":
                                     timerUtils.resetTimer();
                                     player.sendMessage(messages.TIMER_RESETTED);
+                                    timerUtils.setPaused();
+                                    timerUtils.stopTimer();
                                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     e.setCancelled(true);
                                     break;

@@ -6,8 +6,10 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scoreboard.RenderType;
-import org.graalvm.compiler.hotspot.nodes.GraalHotSpotVMConfigNode;
 
 public class Inventorys {
     private final GameruleUtils gameruleUtils = new GameruleUtils();
@@ -67,6 +69,20 @@ public class Inventorys {
             inventorySyncFirst = "§aaktivieren";
         }
 
+        String isRandomEffect;
+        if(challengeUtils.getRandomEffect()) {
+            isRandomEffect = "§7Aktuell: §aaktiviert";
+        } else {
+            isRandomEffect = "§7Aktuell: §cdeaktiviert";
+        }
+
+        String randomEffectFirst;
+        if(challengeUtils.getRandomEffect()) {
+            randomEffectFirst = "§cdeaktivieren";
+        } else {
+            randomEffectFirst = "§aaktivieren";
+        }
+
         Inventory inventory = Bukkit.createInventory(null, 27, "§6Settings §7- §6Challenges");
 
         ItemStack blackGlass = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
@@ -98,12 +114,27 @@ public class Inventorys {
                 .addLore(isInventorySync)
                 .build();
 
+        ItemStack randomPotionEffect = new PotionBuilder(Material.POTION)
+                .setPotionType(PotionType.FIRE_RESISTANCE)
+                .setDisplayname("§aRandom-Effect")
+                .addLore("§aBeschreibung:")
+                .addLore("§7Bei Schaden bekommen alle Spieler einen zufälligen Effekt.")
+                .addLore("")
+                .addLore("§aFunktion:")
+                .addLore("§7Links/Rechtsklick: " + randomEffectFirst)
+                .addLore("")
+                .addLore("§aStatus:")
+                .addLore(isRandomEffect)
+                .addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
+                .build();
+
         for(int i = 0; i <= 26; i++) {
             inventory.setItem(i, blackGlass);
         }
 
         inventory.setItem(10, randomItem);
         inventory.setItem(11, inventorySync);
+        inventory.setItem(12, randomPotionEffect);
 
         return inventory;
     }
@@ -366,6 +397,7 @@ public class Inventorys {
                 .setDisplayname("§aHerzen im Tab")
                 .addLore("§aBeschreibung:")
                 .addLore("§7Lasse die §aHerzen §7der Spieler in der Tablist anzeigen.")
+                .addLore("§7§lErneutes Beitreten erforderlich!")
                 .addLore("")
                 .addLore("§aFunktion:")
                 .addLore("§7Linksklick: " + healthInTabLeft)
