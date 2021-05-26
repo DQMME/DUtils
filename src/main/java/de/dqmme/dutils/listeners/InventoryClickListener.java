@@ -249,46 +249,54 @@ public class InventoryClickListener implements Listener {
                         if(e.getCurrentItem().getItemMeta().hasDisplayName()) {
                             switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                                 case "§aRandom-Item":
-                                    challengeUtils.setRandomItem(!challengeUtils.getRandomItem());
+                                    if(e.getClick().isLeftClick()) {
+                                        challengeUtils.setRandomItem(!challengeUtils.getRandomItem());
 
-                                    World worldRandomItem = Bukkit.getWorld("world_random_item");
-                                    World world = Bukkit.getWorld("world");
+                                        World worldRandomItem = Bukkit.getWorld("world_random_item");
+                                        World world = Bukkit.getWorld("world");
 
-                                    if(challengeUtils.getRandomItem()) {
-                                        if(worldRandomItem != null) {
-                                            Location spawnLocation = worldRandomItem.getSpawnLocation();
+                                        if(challengeUtils.getRandomItem()) {
+                                            if(worldRandomItem != null) {
+                                                Location spawnLocation = worldRandomItem.getSpawnLocation();
+                                                for(Player all : Bukkit.getOnlinePlayers()) {
+                                                    all.teleport(spawnLocation);
+                                                }
+                                            }
+                                            DUtils.getPlugin(DUtils.class).runBar(DUtils.getPlugin(DUtils.class).bossBar);
                                             for(Player all : Bukkit.getOnlinePlayers()) {
-                                                all.teleport(spawnLocation);
+                                                DUtils.getPlugin(DUtils.class).bossBar.addPlayer(all);
                                             }
-                                        }
-                                        DUtils.getPlugin(DUtils.class).runBar(DUtils.getPlugin(DUtils.class).bossBar);
-                                        for(Player all : Bukkit.getOnlinePlayers()) {
-                                            DUtils.getPlugin(DUtils.class).bossBar.addPlayer(all);
-                                        }
-                                        new BukkitRunnable() {
-                                            @Override
-                                            public void run() {
-                                                if(challengeUtils.getRandomItem()) {
-                                                    for(Player all : Bukkit.getOnlinePlayers()) {
-                                                        addRandomItem(all);
+                                            new BukkitRunnable() {
+                                                @Override
+                                                public void run() {
+                                                    if(challengeUtils.getRandomItem()) {
+                                                        for(Player all : Bukkit.getOnlinePlayers()) {
+                                                            addRandomItem(all);
+                                                        }
+                                                    } else {
+                                                        cancel();
                                                     }
-                                                } else {
-                                                    cancel();
+                                                }
+                                            }.runTaskTimerAsynchronously(DUtils.getPlugin(DUtils.class), 0, challengeUtils.getRandomItemSeconds() * 20L);
+                                            player.sendMessage(messages.CHALLANGE_SET.replace("%CHALLENGE%", "Random-Item").replace("%STATUS%", "§aaktiviert"));
+                                            timerUtils.startTimer();
+                                            player.sendMessage(messages.TIMER_STARTED);
+                                        } else {
+                                            for(Player all : Bukkit.getOnlinePlayers()) {
+                                                if(all.getLocation().getWorld().equals(worldRandomItem)) {
+                                                    if(world != null) {
+                                                        all.teleport(world.getSpawnLocation());
+                                                    }
                                                 }
                                             }
-                                        }.runTaskTimerAsynchronously(DUtils.getPlugin(DUtils.class), 0, 10*20);
-                                        player.sendMessage(messages.CHALLANGE_SET.replace("%CHALLENGE%", "Random-Item").replace("%STATUS%", "§aaktiviert"));
-                                        timerUtils.startTimer();
-                                        player.sendMessage(messages.TIMER_STARTED);
-                                    } else {
-                                        for(Player all : Bukkit.getOnlinePlayers()) {
-                                            if(all.getLocation().getWorld().equals(worldRandomItem)) {
-                                                if(world != null) {
-                                                    all.teleport(world.getSpawnLocation());
-                                                }
-                                            }
+                                            player.sendMessage(messages.CHALLANGE_SET.replace("%CHALLENGE%", "Random-Item").replace("%STATUS%", "§cdeaktiviert"));
                                         }
-                                        player.sendMessage(messages.CHALLANGE_SET.replace("%CHALLENGE%", "Random-Item").replace("%STATUS%", "§cdeaktiviert"));
+                                    } else if(e.getClick().isRightClick() && !e.getClick().isShiftClick()) {
+                                        challengeUtils.setRandomItemSeconds(challengeUtils.getRandomItemSeconds()+1);
+                                        player.openInventory(inventorys.settingsChallenges());
+                                    } else if(e.getClick().isShiftClick() && e.getClick().isRightClick()) {
+                                        challengeUtils.setRandomItemSeconds(challengeUtils.getRandomItemSeconds()-1);
+                                        player.openInventory(inventorys.settingsChallenges());
                                     }
                                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 20, 1);
                                     player.openInventory(inventorys.settingsChallenges());

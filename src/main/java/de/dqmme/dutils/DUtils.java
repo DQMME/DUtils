@@ -117,7 +117,7 @@ public final class DUtils extends JavaPlugin {
                     cancel();
                 }
             }
-        }.runTaskTimerAsynchronously(this, 0, 10*20);
+        }.runTaskTimerAsynchronously(this, 0, challengeUtils.getRandomItemSeconds() * 20L);
 
         for(Player all : Bukkit.getOnlinePlayers()) {
             addRandomItem(all);
@@ -225,8 +225,49 @@ public final class DUtils extends JavaPlugin {
                     progress.add(0.8);
                     progress.add(0.9);
                     progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
+                    progress.add(1.0);
 
                     List<String> titles = new ArrayList<>();
+                    titles.add("Nächstes Item: 30 Sekunden");
+                    titles.add("Nächstes Item: 29 Sekunden");
+                    titles.add("Nächstes Item: 28 Sekunden");
+                    titles.add("Nächstes Item: 27 Sekunden");
+                    titles.add("Nächstes Item: 26 Sekunden");
+                    titles.add("Nächstes Item: 25 Sekunden");
+                    titles.add("Nächstes Item: 24 Sekunden");
+                    titles.add("Nächstes Item: 23 Sekunden");
+                    titles.add("Nächstes Item: 22 Sekunden");
+                    titles.add("Nächstes Item: 21 Sekunden");
+                    titles.add("Nächstes Item: 20 Sekunden");
+                    titles.add("Nächstes Item: 19 Sekunden");
+                    titles.add("Nächstes Item: 18 Sekunden");
+                    titles.add("Nächstes Item: 17 Sekunden");
+                    titles.add("Nächstes Item: 16 Sekunden");
+                    titles.add("Nächstes Item: 15 Sekunden");
+                    titles.add("Nächstes Item: 14 Sekunden");
+                    titles.add("Nächstes Item: 13 Sekunden");
+                    titles.add("Nächstes Item: 12 Sekunden");
+                    titles.add("Nächstes Item: 11 Sekunden");
+                    titles.add("Nächstes Item: 10 Sekunden");
                     titles.add("Nächstes Item: 9 Sekunden");
                     titles.add("Nächstes Item: 8 Sekunden");
                     titles.add("Nächstes Item: 7 Sekunden");
@@ -241,7 +282,7 @@ public final class DUtils extends JavaPlugin {
                     bar.setTitle(titles.get(i));
                     bar.setProgress(progress.get(i));
                     i++;
-                    if (i >= progress.size()){
+                    if (i >= challengeUtils.getRandomItemSeconds()){
                         i = 0;
                     }
                 } else {

@@ -24,6 +24,26 @@ public class ChallengeUtils {
         return DUtils.getPlugin(DUtils.class).challengesConf.getBoolean("Random-Item");
     }
 
+    public void setRandomItemSeconds(int seconds) {
+        if(seconds > 30) {
+            DUtils.getPlugin(DUtils.class).challengesConf.set("Random-Item-Seconds", 30);
+            DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).challengesConf, DUtils.getPlugin(DUtils.class).challenges);
+        } else if(seconds < 1) {
+            DUtils.getPlugin(DUtils.class).challengesConf.set("Random-Item-Seconds", 1);
+            DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).challengesConf, DUtils.getPlugin(DUtils.class).challenges);
+        } else {
+            DUtils.getPlugin(DUtils.class).challengesConf.set("Random-Item-Seconds", seconds);
+            DUtils.getPlugin(DUtils.class).saveFile(DUtils.getPlugin(DUtils.class).challengesConf, DUtils.getPlugin(DUtils.class).challenges);
+        }
+    }
+
+    public int getRandomItemSeconds() {
+        if(DUtils.getPlugin(DUtils.class).challengesConf.get("Random-Item-Seconds") == null) {
+            setRandomItemSeconds(10);
+        }
+        return DUtils.getPlugin(DUtils.class).challengesConf.getInt("Random-Item-Seconds");
+    }
+
     public void setInvSync(boolean invSync) {
         if(invSync) {
             for(Player all : Bukkit.getOnlinePlayers()) {

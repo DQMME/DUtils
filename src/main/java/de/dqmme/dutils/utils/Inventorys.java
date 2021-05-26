@@ -43,17 +43,20 @@ public class Inventorys {
     public Inventory settingsChallenges() {
         String isRandomItem;
         if(challengeUtils.getRandomItem()) {
-            isRandomItem = "§7Aktuell: §aaktiviert";
+            isRandomItem = "§7Aktuell: §aaktiviert§7, §b" + challengeUtils.getRandomItemSeconds();
         } else {
-            isRandomItem = "§7Aktuell: §cdeaktiviert";
+            isRandomItem = "§7Aktuell: §cdeaktiviert§7, §b" + challengeUtils.getRandomItemSeconds();
         }
 
-        String randomItemFirst;
+        String randomItemFirstLeft;
         if(challengeUtils.getRandomItem()) {
-            randomItemFirst = "§cdeaktivieren";
+            randomItemFirstLeft = "§cdeaktivieren";
         } else {
-            randomItemFirst = "§aaktivieren";
+            randomItemFirstLeft = "§aaktivieren";
         }
+
+        int randomItemRight = challengeUtils.getRandomItemSeconds()+1;
+        int randomItemShift = challengeUtils.getRandomItemSeconds()-1;
 
         String isInventorySync;
         if(challengeUtils.getInvSync()) {
@@ -96,7 +99,9 @@ public class Inventorys {
                 .addLore("§7Erhalte alle 10 Sekunden ein zufälliges §aItem.")
                 .addLore("")
                 .addLore("§aFunktion:")
-                .addLore("§7Links/Rechtsklick: " + randomItemFirst)
+                .addLore("§7Linksklick: " + randomItemFirstLeft)
+                .addLore("§7Rechtsklick: §b" + randomItemRight)
+                .addLore("§7Rechts + Shiftklick: §b" + randomItemShift)
                 .addLore("")
                 .addLore("§aStatus:")
                 .addLore(isRandomItem)
